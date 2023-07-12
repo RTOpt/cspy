@@ -50,6 +50,7 @@ using namespace bidirectional;
 %rename("%s") bidirectional::BiDirectional::setCriticalRes;
 %rename("%s") bidirectional::BiDirectional::setREFCallback;
 %rename("%s") bidirectional::BiDirectional::setTwoCycleElimination;
+%rename("%s") bidirectional::BiDirectional::setDominanceResSize;
 /* Expose getters */
 %rename("%s") bidirectional::BiDirectional::getPath;
 %rename("%s") bidirectional::BiDirectional::getTotalCost;

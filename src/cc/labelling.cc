@@ -207,7 +207,11 @@ bool Label::checkSameFeasibleExtension(const Label& other) const {
 bool Label::checkDominance(
     const Label&                     other,
     const bidirectional::Directions& direction) const {
-  const int& resource_size = resource_consumption.size();
+  int res_size = resource_consumption.size();
+  if (params_ptr->dominance_resource_size > 0 &&
+      params_ptr->dominance_resource_size < res_size)
+    res_size = params_ptr->dominance_resource_size;
+  const int& resource_size = res_size;
   const int& c_res         = params_ptr->critical_res;
 
   if (weight == other.weight) {

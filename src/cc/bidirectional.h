@@ -129,6 +129,11 @@ class BiDirectional {
   void setREFCallback(bidirectional::REFCallback* cb) {
     params_ptr_->setREFCallback(cb);
   }
+
+  void setDominanceResSize(const int& dominance_resource_size) {
+    params_ptr_->setDominanceResSize(dominance_resource_size);
+  }
+
   /// set random using a given seed
   // void setSeed(const int& seed) { std::srand(seed); }
 

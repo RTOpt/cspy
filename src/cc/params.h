@@ -47,6 +47,8 @@ class Params {
   /// Resource id for the critical resource used in dominance checks and
   /// choosing the halfway point. Default is 0.
   int critical_res = 0;
+  /// Resource size for dominance
+  int dominance_resource_size = -1;
   /// Callback to custom REF
   bidirectional::REFCallback* ref_callback = nullptr;
 
@@ -85,6 +87,10 @@ class Params {
   }
   /// Set callback for custom resource extensions
   void setREFCallback(bidirectional::REFCallback* cb) { ref_callback = cb; };
+
+  void setDominanceResSize(const int& dominance_resource_size_in) {
+    dominance_resource_size = dominance_resource_size_in;
+  }
 };
 
 } // namespace bidirectional
