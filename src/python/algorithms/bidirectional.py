@@ -110,6 +110,8 @@ class BiDirectional:
         REF_callback: Optional[REFCallback] = None,
         two_cycle_elimination: Optional[bool] = False,
         dominance_res_size: Optional[int] = None,
+        set_begin_index: Optional[int] = None,
+        set_size: Optional[int] = None
     ):
         # Check inputs
         check(G, max_res, min_res, direction, REF_callback, __name__)
@@ -166,6 +168,10 @@ class BiDirectional:
             self.bidirectional_cpp.setTwoCycleElimination(True)
         if isinstance(dominance_res_size, int) and dominance_res_size > 0:
             self.bidirectional_cpp.setDominanceResSize(dominance_res_size)
+        if isinstance(set_begin_index, int) and set_begin_index > 0:
+            self.bidirectional_cpp.setSetBeginIndex(set_begin_index)
+        if isinstance(set_size, int) and set_size > 0:
+            self.bidirectional_cpp.setSetSize(set_size)
 
     def run(self):
         "Run the algorithm in series"

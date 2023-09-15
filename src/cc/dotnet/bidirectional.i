@@ -51,6 +51,8 @@ using namespace bidirectional;
 %rename("%s") bidirectional::BiDirectional::setREFCallback;
 %rename("%s") bidirectional::BiDirectional::setTwoCycleElimination;
 %rename("%s") bidirectional::BiDirectional::setDominanceResSize;
+%rename("%s") bidirectional::BiDirectional::setSetBeginIndex;
+%rename("%s") bidirectional::BiDirectional::setSetSize;
 /* Expose getters */
 %rename("%s") bidirectional::BiDirectional::getPath;
 %rename("%s") bidirectional::BiDirectional::getTotalCost;

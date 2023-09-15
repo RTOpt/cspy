@@ -134,6 +134,14 @@ class BiDirectional {
     params_ptr_->setDominanceResSize(dominance_resource_size);
   }
 
+  void setSetBeginIndex(const int& set_begin_index) {
+      params_ptr_->setSetBeginIndex(set_begin_index);
+  }
+
+  void setSetSize(const int& set_size) {
+      params_ptr_->setSetSize(set_size);
+  }
+
   /// set random using a given seed
   // void setSeed(const int& seed) { std::srand(seed); }
 

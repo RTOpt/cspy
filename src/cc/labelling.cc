@@ -214,6 +214,11 @@ bool Label::checkDominance(
   const int& resource_size = res_size;
   const int& c_res         = params_ptr->critical_res;
 
+  // Define set resource variables
+  bool is_set_present = params_ptr->set_begin_index != -1 && params_ptr->set_size != 0;
+  int set_begin_index = params_ptr->set_begin_index;
+  int set_end_index = params_ptr->set_begin_index + params_ptr->set_size;
+
   if (weight == other.weight) {
     // Check if all resources are equal
     bool all_res_equal = std::equal(
@@ -232,7 +237,23 @@ bool Label::checkDominance(
   if (direction == bidirectional::FWD) {
     // Forward
     for (int i = 0; i < resource_size; i++) {
-      if (resource_consumption[i] > other.resource_consumption[i]) {
+
+      if (is_set_present && set_begin_index <= i && i < set_end_index) {
+        // Check for set inclusion
+
+        if (resource_consumption[i] != -1) {
+          bool is_included = false;
+          for (int j = set_begin_index; j < set_end_index; j++) {
+            if (resource_consumption[i] == other.resource_consumption[j]) {
+              is_included = true;
+              break;
+            }
+          }
+          if (!is_included) {
+            return false;
+          }
+        }
+      } else if (resource_consumption[i] > other.resource_consumption[i]) {
         return false;
       }
     }
@@ -246,7 +267,24 @@ bool Label::checkDominance(
     for (int i = 0; i < resource_size; i++) {
       // Exclude critical_res
       if (i != c_res) {
-        if (resource_consumption[i] > other.resource_consumption[i]) {
+        
+        if (is_set_present && set_begin_index <= i && i < set_end_index) {
+          // Check for set inclusion
+
+          if (resource_consumption[i] != -1) {
+            bool is_included = false;
+            for (int j = set_begin_index; j < set_end_index; j++) {
+              if (resource_consumption[i] == other.resource_consumption[j]) {
+                is_included = true;
+                break;
+              }
+            }
+            if (!is_included) {
+              return false;
+            }
+          }
+        }
+        else if (resource_consumption[i] > other.resource_consumption[i]) {
           return false;
         }
       }

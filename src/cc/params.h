@@ -49,6 +49,10 @@ class Params {
   int critical_res = 0;
   /// Resource size for dominance
   int dominance_resource_size = -1;
+  /// First index of the adjacent resources to be checked for set inclusion dominance.
+  int set_begin_index = -1;
+  /// Size of the set.
+  int set_size = 0;
   /// Callback to custom REF
   bidirectional::REFCallback* ref_callback = nullptr;
 
@@ -89,7 +93,15 @@ class Params {
   void setREFCallback(bidirectional::REFCallback* cb) { ref_callback = cb; };
 
   void setDominanceResSize(const int& dominance_resource_size_in) {
-    dominance_resource_size = dominance_resource_size_in;
+      dominance_resource_size = dominance_resource_size_in;
+  }
+
+  void setSetBeginIndex(const int& set_begin_index_in) {
+      set_begin_index = set_begin_index_in;
+  }
+
+  void setSetSize(const int& set_size_in) {
+      set_size = set_size_in;
   }
 };
 
