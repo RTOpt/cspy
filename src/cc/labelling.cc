@@ -89,24 +89,29 @@ Label Label::extend(
           weight);
     }
   }
-  // Create new label
-  Label new_label(
-      weight + adjacent_vertex.weight,
-      new_node,
-      new_resources,
-      new_partial_path,
-      params_ptr);
-  // Check feasibility (soft=true) before returning label
-  if (new_label.checkFeasibility(max_res, min_res, true)) {
-    return new_label;
-  } else {
-    // Update current labels unreachable_nodes
-    if (params_ptr->elementary) {
-      // Push new node (direction doesn't matter here as edges have been
-      // reversed for backward extensions)
-      unreachable_nodes.insert(new_node.user_id);
-    }
+
+  if (new_resources.size() > 0) {
+
+    // Create new label
+    Label new_label(
+        weight + adjacent_vertex.weight,
+        new_node,
+        new_resources,
+        new_partial_path,
+        params_ptr);
+    // Check feasibility (soft=true) before returning label
+    if (new_label.checkFeasibility(max_res, min_res, true)) {
+      return new_label;
+    }  
   }
+
+  // Update current labels unreachable_nodes
+  if (params_ptr->elementary) {
+    // Push new node (direction doesn't matter here as edges have been
+    // reversed for backward extensions)
+    unreachable_nodes.insert(new_node.user_id);
+  }
+  
   return Label();
 }
 
@@ -241,7 +246,7 @@ bool Label::checkDominance(
       if (is_set_present && set_begin_index <= i && i < set_end_index) {
         // Check for set inclusion
 
-        if (resource_consumption[i] != -1) {
+        if (resource_consumption[i] != -1) {          
           bool is_included = false;
           for (int j = set_begin_index; j < set_end_index; j++) {
             if (resource_consumption[i] == other.resource_consumption[j]) {
@@ -252,6 +257,9 @@ bool Label::checkDominance(
           if (!is_included) {
             return false;
           }
+        } else {
+          // It is assumed that all the -1 are at the end of the set.
+          break;
         }
       } else if (resource_consumption[i] > other.resource_consumption[i]) {
         return false;
